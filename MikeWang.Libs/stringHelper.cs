@@ -26,6 +26,24 @@ namespace MikeWang.Libs
         }
 
         /// <summary>
+        /// 取得目前Session的總Bytes數值
+        /// </summary>
+        /// <returns>傳回Session大小 (long)</returns>
+        public static long getSessionBytes()
+        {
+            long totalSessionBytes = 0;
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter b = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            System.IO.MemoryStream m;
+            foreach (var obj in HttpContext.Current.Session)
+            {
+                m = new System.IO.MemoryStream();
+                b.Serialize(m, obj);
+                totalSessionBytes += m.Length;
+            }
+            return totalSessionBytes;
+        }
+
+        /// <summary>
         /// MD5加密
         /// </summary>
         /// <param name="txtInput">輸入字串</param>
