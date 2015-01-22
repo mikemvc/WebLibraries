@@ -44,6 +44,28 @@ namespace MikeWang.Libs
         }
 
         /// <summary>
+        /// 取得目前Session的所有物件與Byte數值
+        /// </summary>
+        /// <param name="withTotal">是否包含Session的Total數值，預設為否</param>
+        /// <returns>回傳結果 (Dctionary) </returns>
+        public Dictionary<string,string> getSessionObject(Boolean withTotal = false)
+        {
+            var sessionObj = new Dictionary<string, string>();
+            long totalSessionBytes = 0;
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter b = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            System.IO.MemoryStream m;
+            foreach (var obj in HttpContext.Current.Session)
+            {
+                m = new System.IO.MemoryStream();
+                b.Serialize(m, obj);
+                sessionObj.Add(obj.ToString(), m.Length.ToString());
+                totalSessionBytes += m.Length;
+            }
+            if (withTotal) sessionObj.Add("total", totalSessionBytes.ToString());
+            return sessionObj;
+        }
+
+        /// <summary>
         /// MD5加密
         /// </summary>
         /// <param name="txtInput">輸入字串</param>
