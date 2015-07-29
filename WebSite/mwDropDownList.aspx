@@ -10,7 +10,11 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+        <asp:DropDownList ID="DropDownList1" runat="server">
+            <asp:ListItem>Select...</asp:ListItem>
+            <asp:ListItem>A</asp:ListItem>
+            <asp:ListItem>B</asp:ListItem>
+        </asp:DropDownList>
     </div>
     </form>
 </body>
